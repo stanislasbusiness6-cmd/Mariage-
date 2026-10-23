@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#3b2418">
+<meta name="description" content="Vous êtes invités à notre mariage.">
+<title>Notre mariage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,500&family=Cinzel:wght@400;600&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<script>
+/* ==========================================================
+   TEXTES À MODIFIER : tout se change ici, en haut du fichier
+   (gardez les guillemets et les virgules)
+   ========================================================== */
+const SITE = {
+  prenom1: "Prénom 1",
+  prenom2: "Prénom 2",
+  dateISO: "2027-06-19T15:30:00",        // pour le compte à rebours (année-mois-jourTheure)
+  dateTexte: "Samedi 19 juin 2027",
+  accueil: "Avec une immense joie, nous vous invitons à célébrer le plus beau jour de notre vie.",
+
+  histoire: [
+    { date: "Été 2018", titre: "La rencontre", texte: "Un regard, un éclat de rire, et déjà le sentiment de se connaître depuis toujours." },
+    { date: "Février 2019", titre: "Le premier rendez-vous", texte: "Une soirée qui devait durer une heure, et qui n’a jamais vraiment fini." },
+    { date: "Décembre 2025", titre: "La demande en mariage", texte: "Une question, une larme, un grand oui. Le début d’un nouveau chapitre." }
+  ],
+
+  programme: [
+    { h: "15h00", t: "Accueil des invités", d: "Café, thé et douceurs" },
+    { h: "15h30", t: "Cérémonie", d: "Échange des vœux" },
+    { h: "17h00", t: "Séance photos", d: "Photos de famille et d’amis" },
+    { h: "19h30", t: "Repas", d: "Dîner et soirée dansante" },
+    { h: "23h00", t: "Remerciements", d: "Un dernier mot, un dernier verre" }
+  ],
+
+  salle: "Nom de la salle",
+  adresse: "12 rue des Lilas",
+  ville: "75000 Ville",
+
+  tenue: "Tenue élégante de cocktail. Nous vous invitons à privilégier des tons chauds et naturels.",
+  couleurs: [ ["#c9a27e", "Sable"], ["#b85c38", "Terracotta"], ["#6b6b3d", "Olive"] ],
+
+  rsvpLien: "https://forms.gle/VOTRE_LIEN",  // lien de votre formulaire (Google Forms, Tally...)
+  dateLimite: "1er mai 2027",
+
+  merci: "Merci de faire partie de notre histoire",
+  hashtag: "#PrenomEtPrenom"
+};
+</script>
+
+<style>
+:root{--cr:#f6efe4;--te:#b85c38;--br:#3b2418;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--cr);color:var(--br);font:300 1rem/1.75 Jost,system-ui,sans-serif;overflow-x:hidden}
+body.lock{overflow:hidden;height:100svh}
+.script{font-family:'Pinyon Script',cursive;font-weight:400}
+.cin{font-family:Cinzel,serif;font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:var(--te)}
+h2,h3{font-family:'Bodoni Moda',serif;font-weight:500}
+h2{font-size:clamp(1.9rem,8vw,2.7rem);line-height:1.2;margin:.7rem 0 2.2rem}
+section{max-width:620px;margin:0 auto;padding:5.5rem 1.6rem;text-align:center}
+:focus-visible{outline:2px solid var(--te);outline-offset:3px}
+
+/* Apparitions */
+.rv{opacity:0;transform:translateY(22px);transition:opacity 1.3s ease,transform 1.3s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em}
+.w>span{display:inline-block;transform:translateY(112%);transition:transform 1.2s var(--ease) calc(var(--i)*.1s)}
+.in .w>span,.w.in>span{transform:none}
+
+/* Ouverture */
+#intro{position:fixed;inset:0;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.4rem;color:var(--cr);background:radial-gradient(circle at 50% 40%,#5a3826,#2b170e);transition:opacity 1.4s ease}
+#intro.out{opacity:0;pointer-events:none}
+#intro .cin{color:#e9c9ad}
+.env{position:relative;width:min(84vw,340px);aspect-ratio:3/2;perspective:900px}
+.env>*{position:absolute;inset:0}
+.back{background:#8f4326;border-radius:4px;box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.card{inset:auto;left:7%;right:7%;top:9%;height:82%;z-index:2;background:#fbf6ee;color:var(--br);border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.2);transition:transform 1.5s var(--ease) .8s}
+.card .script{font-size:1.8rem;line-height:1.1}
+.card .cin{font-size:.58rem}
+.pocket{z-index:3;background:linear-gradient(160deg,#c46a43,#a74e2e);clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%);border-radius:4px}
+.flap{z-index:4;background:#cf7447;clip-path:polygon(0 0,100% 0,50% 58%);transform-origin:50% 0;transition:transform .9s ease,z-index 0s .45s}
+.seal{inset:auto;z-index:5;left:calc(50% - 33px);top:calc(58% - 33px);width:66px;height:66px;border-radius:50%;display:grid;place-items:center;color:#f6efe4;font:1.45rem/1 'Pinyon Script',cursive;background:radial-gradient(circle at 35% 30%,#b04a30,#6a2112);box-shadow:0 3px 8px rgba(0,0,0,.4),inset 0 0 0 3px rgba(255,255,255,.08);transition:opacity .5s,transform .5s}
+.env.open .flap{transform:rotateX(180deg);z-index:1}
+.env.open .seal{opacity:0;transform:scale(.8)}
+.env.open .card{transform:translateY(-68%) scale(1.06)}
+.btn{display:inline-block;min-height:48px;padding:.95rem 2rem;border:0;border-radius:999px;background:var(--te);color:var(--cr);font:500 .78rem/1.4 Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .7s,opacity .7s,transform .7s var(--ease)}
+.btn:active{transform:scale(.97)}
+#open:disabled{opacity:0}
+@media(hover:hover){.btn:hover{background:#8f4326}.band .btn:hover{background:#fff}}
+
+/* Site */
+#site{opacity:0}
+#site.show{opacity:1;transition:opacity 1.8s ease}
+.hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;color:var(--cr);overflow:hidden;padding:calc(3rem + env(safe-area-inset-top)) 1.4rem calc(3rem + env(safe-area-inset-bottom))}
+.hero .bg{position:absolute;inset:0;background:linear-gradient(rgba(59,36,24,.5),rgba(59,36,24,.82)),url(photos/accueil.jpg) center/cover;animation:kb 26s ease-in-out infinite alternate}
+@keyframes kb{to{transform:scale(1.1)}}
+.hero .in{position:relative}
+.hero .cin{color:#ecd0b6}
+h1{font:400 clamp(3.6rem,19vw,6.2rem)/1.05 'Pinyon Script',cursive;margin:1rem 0}
+h1 .w{display:block;padding:.12em .1em}
+h1 .amp{font-size:.55em;line-height:1;color:#e3a47f}
+.date{font:500 1.15rem 'Bodoni Moda',serif;letter-spacing:.06em}
+.lead{max-width:30ch;margin:1.2rem auto 2rem;opacity:.92}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;max-width:340px;margin:0 auto}
+.cd div{border:1px solid rgba(246,239,228,.38);padding:.8rem 0}
+.cd b{display:block;font:500 1.7rem/1.1 'Bodoni Moda',serif}
+.cd span{font:.56rem Cinzel,serif;letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+
+.tl{position:relative;text-align:left;padding-left:2.2rem}
+.line{position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--te);transform-origin:top;transform:scaleY(var(--p,0))}
+.it{position:relative;padding-bottom:2.6rem}
+.it:last-child{padding-bottom:0}
+.dot{position:absolute;left:-2.2rem;top:.4rem;width:13px;height:13px;border:1px solid var(--te);border-radius:50%;background:var(--cr);transition:background 1.2s}
+.it.in .dot{background:var(--te)}
+.it h3{font-size:1.45rem;margin:.1rem 0 .2rem}
+.it p{opacity:.85}
+
+.gl .g{position:relative;overflow:hidden;width:80%;aspect-ratio:4/5;margin:0 auto 1.6rem;border-radius:220px 220px 6px 6px}
+.gl .g:nth-child(odd){margin-left:0}
+.gl .g:nth-child(even){margin-right:0;margin-left:auto;aspect-ratio:1;border-radius:6px}
+.g img{position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;will-change:transform}
+
+.pg{text-align:left}
+.pg div{display:grid;grid-template-columns:4.6rem 1fr;gap:1rem;padding:1.15rem 0;border-bottom:1px solid rgba(59,36,24,.16)}
+.pg time{font:500 1.25rem 'Bodoni Moda',serif;color:var(--te)}
+.pg b{display:block;font-weight:500}
+.pg small{font-size:.9rem;opacity:.75}
+
+.lieu h3{font-size:1.6rem}
+.map{margin:1.8rem 0 1.6rem;border-radius:6px;overflow:hidden;box-shadow:0 14px 34px rgba(59,36,24,.2)}
+.map iframe{display:block;width:100%;height:260px;border:0}
+
+.sw{display:flex;justify-content:center;gap:1.6rem;margin-top:1.8rem}
+.sw i{display:block;width:58px;height:58px;margin:0 auto .6rem;border-radius:50%;box-shadow:0 0 0 4px var(--cr),0 0 0 5px rgba(59,36,24,.3)}
+.sw span{font:.62rem Cinzel,serif;letter-spacing:.2em;text-transform:uppercase}
+
+.band{color:var(--cr)}
+.band.te{background:var(--te)}
+.band.br{background:var(--br)}
+.band .cin{color:#f1d3ba}
+.band .btn{background:var(--cr);color:var(--br)}
+.band p.note{margin:1.4rem 0 0;opacity:.9}
+.ft .script{font-size:3.6rem;line-height:1.2}
+.ft .merci{font:italic 500 1.35rem/1.4 'Bodoni Moda',serif;margin-bottom:1.2rem}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  .w>span{transform:none}
+  .line{transform:none}
+}
+</style>
+</head>
+<body class="lock">
+
+<div id="intro">
+  <p class="cin">Vous êtes invités</p>
+  <div class="env" id="env">
+    <div class="back"></div>
+    <div class="card"><span class="cin">Nous nous marions</span><span class="script" data-names></span></div>
+    <div class="pocket"></div>
+    <div class="flap"></div>
+    <div class="seal" data-ini></div>
+  </div>
+  <button class="btn" id="open" type="button">Ouvrir notre invitation</button>
+</div>
+
+<main id="site">
+  <header class="hero">
+    <div class="bg"></div>
+    <div class="in">
+      <p class="cin rv">Nous nous marions</p>
+      <h1 id="noms"></h1>
+      <p class="date rv" data-f="dateTexte"></p>
+      <p class="lead rv" data-f="accueil"></p>
+      <div class="cd rv" id="cd"></div>
+    </div>
+  </header>
+
+  <section>
+    <p class="cin rv">Notre histoire</p>
+    <h2 class="words">Deux chemins, une seule route</h2>
+    <div class="tl" id="tl"><i class="line"></i></div>
+  </section>
+
+  <section>
+    <p class="cin rv">Galerie</p>
+    <h2 class="words">Quelques instants de nous</h2>
+    <div class="gl">
+      <figure class="g"><img loading="lazy" src="photos/galerie-1.jpg" alt="Nous deux, premier souvenir"></figure>
+      <figure class="g"><img loading="lazy" src="photos/galerie-2.jpg" alt="Nous deux, deuxième souvenir"></figure>
+      <figure class="g"><img loading="lazy" src="photos/galerie-3.jpg" alt="Nous deux, troisième souvenir"></figure>
+      <figure class="g"><img loading="lazy" src="photos/galerie-4.jpg" alt="Nous deux, quatrième souvenir"></figure>
+      <figure class="g"><img loading="lazy" src="photos/galerie-5.jpg" alt="Nous deux, cinquième souvenir"></figure>
+    </div>
+  </section>
+
+  <section>
+    <p class="cin rv">Le programme</p>
+    <h2 class="words">Le déroulé de la journée</h2>
+    <div class="pg" id="pg"></div>
+  </section>
+
+  <section class="lieu">
+    <p class="cin rv">Le lieu</p>
+    <h2 class="words">Où nous retrouver</h2>
+    <h3 class="rv" data-f="salle"></h3>
+    <p class="rv"><span data-f="adresse"></span><br><span data-f="ville"></span></p>
+    <div class="map rv"><iframe id="map" title="Plan d’accès" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    <a class="btn rv" id="iti" target="_blank" rel="noopener">Ouvrir l’itinéraire</a>
+  </section>
+
+  <section>
+    <p class="cin rv">Tenue</p>
+    <h2 class="words">Le dress code</h2>
+    <p class="rv" data-f="tenue"></p>
+    <div class="sw rv" id="sw"></div>
+  </section>
+
+  <div class="band te">
+    <section>
+      <p class="cin rv">Confirmer ma présence</p>
+      <h2 class="words">Serez-vous des nôtres ?</h2>
+      <a class="btn rv" id="rsvp" target="_blank" rel="noopener">Répondre à l’invitation</a>
+      <p class="note rv">Merci de répondre avant le <span data-f="dateLimite"></span>.</p>
+    </section>
+  </div>
+
+  <footer class="band br ft">
+    <section>
+      <p class="merci rv" data-f="merci"></p>
+      <p class="script rv" data-ini2></p>
+      <p class="cin rv" data-f="hashtag"></p>
+    </section>
+  </footer>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const p1 = SITE.prenom1, p2 = SITE.prenom2;
+
+/* Textes simples */
+document.title = p1 + " & " + p2 + " — Notre mariage";
+document.querySelectorAll('[data-f]').forEach(e => e.textContent = SITE[e.dataset.f]);
+document.querySelectorAll('[data-names]').forEach(e => e.textContent = p1 + " & " + p2);
+document.querySelectorAll('[data-ini]').forEach(e => e.textContent = p1[0] + "&" + p2[0]);
+document.querySelectorAll('[data-ini2]').forEach(e => e.textContent = p1[0] + " & " + p2[0]);
+$('#noms').className = 'words';
+$('#noms').innerHTML = [p1, "&", p2].map((t, i) =>
+  `<span class="w${i == 1 ? ' amp' : ''}" style="--i:${i}"><span>${esc(t)}</span></span>`).join('');
+
+/* Titres mot par mot */
+document.querySelectorAll('h2.words').forEach(el => {
+  el.innerHTML = el.textContent.split(' ').map((w, i) =>
+    `<span class="w" style="--i:${i}"><span>${esc(w)}</span></span>`).join(' ');
+});
+
+/* Frise, programme, tenue, lien */
+$('#tl').insertAdjacentHTML('beforeend', SITE.histoire.map(h =>
+  `<div class="it rv"><i class="dot"></i><span class="cin">${esc(h.date)}</span><h3>${esc(h.titre)}</h3><p>${esc(h.texte)}</p></div>`).join(''));
+$('#pg').innerHTML = SITE.programme.map(p =>
+  `<div class="rv"><time>${esc(p.h)}</time><span><b>${esc(p.t)}</b><small>${esc(p.d)}</small></span></div>`).join('');
+$('#sw').innerHTML = SITE.couleurs.map(c =>
+  `<div><i style="background:${esc(c[0])}"></i><span>${esc(c[1])}</span></div>`).join('');
+const q = encodeURIComponent(SITE.salle + ", " + SITE.adresse + ", " + SITE.ville);
+$('#map').src = "https://www.google.com/maps?q=" + q + "&output=embed";
+$('#iti').href = "https://www.google.com/maps/dir/?api=1&destination=" + q;
+$('#rsvp').href = SITE.rsvpLien;
+
+/* Compte à rebours */
+const cd = $('#cd'), target = new Date(SITE.dateISO).getTime();
+cd.innerHTML = ['Jours', 'Heures', 'Minutes', 'Secondes'].map(l => `<div><b>00</b><span>${l}</span></div>`).join('');
+const nums = cd.querySelectorAll('b');
+function tickCd() {
+  const s = Math.max(0, Math.floor((target - Date.now()) / 1000));
+  const v = [Math.floor(s / 86400), Math.floor(s % 86400 / 3600), Math.floor(s % 3600 / 60), s % 60];
+  nums.forEach((n, i) => n.textContent = String(v[i]).padStart(2, '0'));
+}
+tickCd(); setInterval(tickCd, 1000);
+
+/* Apparitions au défilement */
+function watch() {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: .2, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv,.words').forEach(el => io.observe(el));
+}
+
+/* Frise qui se dessine + profondeur de la galerie */
+const tl = $('#tl'), imgs = document.querySelectorAll('.g img');
+let busy = false;
+function onScroll() {
+  if (busy) return; busy = true;
+  requestAnimationFrame(() => {
+    busy = false;
+    const vh = innerHeight, r = tl.getBoundingClientRect();
+    tl.style.setProperty('--p', RM ? 1 : Math.min(1, Math.max(0, (vh * .75 - r.top) / r.height)));
+    if (RM) return;
+    imgs.forEach(img => {
+      const b = img.parentNode.getBoundingClientRect();
+      const c = Math.max(-1, Math.min(1, (b.top + b.height / 2 - vh / 2) / vh));
+      img.style.transform = `translate3d(0,${(-c * 8).toFixed(2)}%,0)`;
+    });
+  });
+}
+addEventListener('scroll', onScroll, { passive: true });
+addEventListener('resize', onScroll);
+
+/* Ouverture de l'enveloppe */
+const intro = $('#intro'), env = $('#env'), site = $('#site');
+function reveal() {
+  site.classList.add('show');
+  document.body.classList.remove('lock');
+  scrollTo(0, 0); watch(); onScroll();
+}
+$('#open').onclick = function () {
+  this.disabled = true;
+  if (RM) { intro.remove(); reveal(); return; }
+  env.classList.add('open');
+  setTimeout(() => { intro.classList.add('out'); reveal(); }, 2900);
+  setTimeout(() => intro.remove(), 4400);
+};
+</script>
+</body>
+</html>
